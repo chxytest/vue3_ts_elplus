@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import localCache from '@/utils/cache'
 
-import { IloginState } from './type'
+import { ILoginState } from './type'
 import { IRootState } from '../type'
 import { IAccount } from '@/service/login/type'
 
@@ -12,7 +12,7 @@ import {
 } from '@/service/login/login'
 import router from '@/router'
 
-const loginModule: Module<IloginState, IRootState> = {
+const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
     return {
