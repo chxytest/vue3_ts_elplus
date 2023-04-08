@@ -4,11 +4,14 @@
       <el-aside :width="isCollapse ? '60px' : '210px'">
         <nav-memu :collapse="isCollapse"></nav-memu>
       </el-aside>
+
       <el-container class="page">
         <el-header class="page-header">
           <nav-header @fold-change="handleFoldChange"></nav-header>
         </el-header>
+
         <el-main class="page-content">Main</el-main>
+
         <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
