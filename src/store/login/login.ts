@@ -11,6 +11,7 @@ import {
   requestUserMenusByRoleId
 } from '@/service/login/login'
 import router from '@/router'
+import { mapMenusToRouters } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -31,6 +32,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      console.log('注册动态路由')
+
+      // userMenus => routes
+      const routes = mapMenusToRouters(userMenus)
+
+      // 将routes => router.main.children
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   },
   actions: {
@@ -40,21 +50,18 @@ const loginModule: Module<ILoginState, IRootState> = {
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult.data
       commit('changeToken', token)
-      console.log('loginResult :', loginResult)
       localCache.setCache('token', token)
 
       // 2.请求用户信息
       const userInfoResult = await requestUserInfoById(id)
       const userInfo = userInfoResult.data
       commit('changeUserInfo', userInfo)
-      console.log('userInfoResult :', userInfoResult)
       localCache.setCache('userInfo', userInfo)
 
       // 3.请求用户菜单角色权限
       const userMenusResult = await requestUserMenusByRoleId(userInfo.role.id)
       const userMenus = userMenusResult.data
       commit('changeUserMenus', userMenus)
-      console.log('userMenus :', userMenus)
       localCache.setCache('userMenus', userMenus)
 
       // 4.登录成功后跳转首页
