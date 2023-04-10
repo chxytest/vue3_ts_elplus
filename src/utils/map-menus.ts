@@ -1,5 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 
+let firstMenu: any = null
+
 export function mapMenusToRouters(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
@@ -21,6 +23,10 @@ export function mapMenusToRouters(userMenus: any[]): RouteRecordRaw[] {
         if (route) {
           routes.push(route)
         }
+        // 给第一个拿到的菜单赋值，如果存在就不用赋值
+        if (!firstMenu) {
+          firstMenu = menu
+        }
       } else {
         _recurseGetRoute(menu.children)
       }
@@ -30,3 +36,19 @@ export function mapMenusToRouters(userMenus: any[]): RouteRecordRaw[] {
   _recurseGetRoute(userMenus)
   return routes
 }
+
+// 用户刷新页面时匹配当前路径的菜单，包括深度匹配
+export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+  for (const menu of userMenus) {
+    if (menu.type == 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        return findMenu
+      }
+    } else if (menu.type == 2 && menu.url == currentPath) {
+      return menu
+    }
+  }
+}
+
+export { firstMenu }
