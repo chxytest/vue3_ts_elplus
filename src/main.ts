@@ -16,48 +16,9 @@ const app = createApp(App)
 
 // 注册element-plus/其他
 app.use(globalRegister)
-app.use(router)
 app.use(store)
+// 先动态获取到路由再去做匹配，否则会出现刷新页面 not-found 的问题
 setupStore()
+app.use(router)
 
 app.mount('#app')
-
-// console.log(VUE_APP_BASE_URL)
-// console.log(process.env.VUE_APP_BASE_URL)
-// console.log(process.env.VUE_APP_BASE_NAME)
-
-// hyRequest.request({
-//   url: '/home/multidata',
-//   method: 'GET',
-//   headers: {},
-//   interceptors: {
-//     requestInterceptor: (config) => {
-//       console.log('单独请求的config')
-//       config.headers['token'] = '123'
-//       return config
-//     },
-//     responseInterceptor: (res) => {
-//       console.log('单独响应的response')
-//       return res
-//     }
-//   }
-// })
-
-// interface DataType {
-//   data: any
-//   returnCode: string
-//   success: boolean
-// }
-
-// hyRequest
-//   .get<DataType>({
-//     url: '/home/multidata',
-//     showLoading: false
-//   })
-//   .then((res) => {
-//     console.log(res.data)
-//     console.log(res.returnCode)
-//     console.log(res.success)
-//   })
-
-// hyRequest.get()

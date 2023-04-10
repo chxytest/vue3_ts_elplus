@@ -38,6 +38,8 @@ router.beforeEach((to) => {
       return '/login'
     }
   }
+  console.log(router.getRoutes())
+  console.log('to >>>', to)
 
   if (to.path.indexOf('/main') !== -1) {
     if (to.name === 'notFound') {
