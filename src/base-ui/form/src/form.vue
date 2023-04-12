@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { IFormItem } from '../types'
+import { IFormItem } from '../types/index'
 
 export default defineComponent({
   props: {

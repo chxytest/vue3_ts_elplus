@@ -1,4 +1,4 @@
-import { IForm } from '@/base-ui'
+import { IForm } from '@/base-ui/form'
 
 export const searchFormConfig: IForm = {
   labelWidth: '120px',

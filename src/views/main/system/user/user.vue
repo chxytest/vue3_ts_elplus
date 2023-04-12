@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HyForm from '@/base-ui'
+import HyForm from '@/base-ui/form'
 import { searchFormConfig } from './config/search.config'
 
 export default defineComponent({

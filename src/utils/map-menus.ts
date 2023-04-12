@@ -1,3 +1,4 @@
+import { IBreadcrumb } from '@/base-ui/breadcrumb'
 import { RouteRecordRaw } from 'vue-router'
 
 let firstMenu: any = null
@@ -37,12 +38,25 @@ export function mapMenusToRouters(userMenus: any[]): RouteRecordRaw[] {
   return routes
 }
 
+// 面包屑导航需要获取的路由菜单信息
+export function pathMapBreadcrumbs(userMenus: any[], currentPath: string): any {
+  const breadcrumbs: IBreadcrumb[] = []
+  pathMapToMenu(userMenus, currentPath, breadcrumbs)
+  return breadcrumbs
+}
+
 // 用户刷新页面时匹配当前路径的菜单，包括深度匹配
-export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+export function pathMapToMenu(
+  userMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): any {
   for (const menu of userMenus) {
     if (menu.type == 1) {
       const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
       if (findMenu) {
+        breadcrumbs?.push({ name: menu.name, path: menu.url })
+        breadcrumbs?.push({ name: findMenu.name, path: findMenu.url })
         return findMenu
       }
     } else if (menu.type == 2 && menu.url == currentPath) {
