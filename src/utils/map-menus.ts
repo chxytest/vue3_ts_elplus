@@ -13,7 +13,7 @@ export function mapMenusToRouters(userMenus: any[]): RouteRecordRaw[] {
     const route = require('../router/main' + key.split('.')[1])
     allRoutes.push(route.default)
   })
-  console.log('allRoutes >>>', allRoutes)
+  // console.log('allRoutes >>>', allRoutes)
 
   // 2.根据菜单获取需要添加的routes
 
