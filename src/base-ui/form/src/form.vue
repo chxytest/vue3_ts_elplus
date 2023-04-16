@@ -1,5 +1,8 @@
 <template>
   <div class="hy-form">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
@@ -44,6 +47,9 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
@@ -67,7 +73,7 @@ export default defineComponent({
     },
     itemStyle: {
       type: Object,
-      default: () => ({ padding: '10px 40px' })
+      default: () => ({ padding: '10px 0px' })
     },
     colLayout: {
       type: Object,
