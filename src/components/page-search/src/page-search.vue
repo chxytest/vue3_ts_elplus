@@ -6,8 +6,10 @@
       </template>
       <template #footer>
         <div class="handle-btns">
-          <el-button icon="el-icon-refresh">重置</el-button>
-          <el-button type="primary" icon="el-icon-search">搜索</el-button>
+          <el-button size="mini" icon="el-icon-refresh">重置</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-search"
+            >搜索</el-button
+          >
         </div>
       </template>
     </hy-form>
@@ -50,6 +52,6 @@ export default defineComponent({
 }
 .handle-btns {
   text-align: right;
-  padding: 0 50px 20px 0;
+  padding: 0 10px 10px 0;
 }
 </style>

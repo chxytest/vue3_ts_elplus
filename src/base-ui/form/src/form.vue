@@ -3,7 +3,7 @@
     <div class="header">
       <slot name="header"></slot>
     </div>
-    <el-form :label-width="labelWidth">
+    <el-form size="mini" :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
@@ -105,6 +105,14 @@ export default defineComponent({
 
 <style scoped lang="less">
 .hy-form {
-  padding-top: 22px;
+  padding-top: 10px;
+
+  .el-row {
+    padding: 10px;
+  }
+
+  .el-col {
+    height: 50px;
+  }
 }
 </style>
