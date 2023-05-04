@@ -3,7 +3,12 @@
     <page-search :searchFormConfig="searchFormConfig" />
 
     <div class="content">
-      <hy-table :listData="userList" :propList="propList">
+      <hy-table
+        :listData="userList"
+        :propList="propList"
+        :showIndexColumn="showIndexColumn"
+        :showSelectColumn="showSelectColumn"
+      >
         <template #status="scope">
           <el-button
             size="mini"
@@ -16,6 +21,14 @@
         </template>
         <template #updateAt="scope">
           <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+        </template>
+        <template #handler>
+          <el-button icon="el-icon-edit" size="mini" type="text"
+            >编辑</el-button
+          >
+          <el-button icon="el-icon-delete" size="mini" type="text"
+            >删除</el-button
+          >
         </template>
       </hy-table>
     </div>
@@ -69,14 +82,24 @@ export default defineComponent({
         label: '更新时间',
         minWidth: '250',
         slotName: 'updateAt'
+      },
+      {
+        label: '操作',
+        minWidth: '120',
+        slotName: 'handler'
       }
     ]
+
+    const showIndexColumn = true
+    const showSelectColumn = true
 
     return {
       searchFormConfig,
       userList,
       userCount,
-      propList
+      propList,
+      showIndexColumn,
+      showSelectColumn
     }
   }
 })
