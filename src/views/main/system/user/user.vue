@@ -5,10 +5,17 @@
     <div class="content">
       <hy-table :listData="userList" :propList="propList">
         <template #status="scope">
-          <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
+          <el-button
+            size="mini"
+            :type="scope.row.enable ? 'success' : 'danger'"
+            >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+          >
         </template>
         <template #createAt="scope">
-          <strong>{{ scope.row.createAt }}</strong>
+          <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
+        </template>
+        <template #updateAt="scope">
+          <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
         </template>
       </hy-table>
     </div>
@@ -77,7 +84,7 @@ export default defineComponent({
 
 <style scoped>
 .content {
-  padding: 20px;
-  border-top: 20px solid #f5f5f5;
+  padding: 10px;
+  border-top: 10px solid #f5f5f5;
 }
 </style>
