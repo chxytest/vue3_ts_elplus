@@ -1,5 +1,14 @@
 <template>
   <div class="hy-table">
+    <div class="header">
+      <slot name="header">
+        <div class="title">{{ title }}</div>
+        <div class="handler">
+          <slot name="headerHandler"></slot>
+        </div>
+      </slot>
+    </div>
+
     <el-table
       size="mini"
       :data="listData"
@@ -30,19 +39,42 @@
         </el-table-column>
       </template>
     </el-table>
+
+    <div class="footer">
+      <slot name="footer">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        >
+        </el-pagination>
+      </slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+// PropType
 import { PropType, defineComponent } from 'vue'
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     listData: {
       type: Array,
       required: true
     },
     propList: {
       type: Array as PropType<any[]>,
+      default() {
+        return []
+      },
       required: true
     },
     showIndexColumn: {
@@ -52,18 +84,55 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    currentPage: {
+      type: Number,
+      default: 1
     }
   },
-  emits: ['selectionChange'],
+  emits: ['selectionChange', 'sizeChange', 'currentChange'],
   setup(props, { emit }) {
     const handelSelectionChange = (value: any) => {
       emit('selectionChange', value)
     }
+    const handleSizeChange = (value: any) => {
+      emit('sizeChange', value)
+    }
+    const handleCurrentChange = (value: any) => {
+      emit('currentChange', value)
+    }
     return {
-      handelSelectionChange
+      handelSelectionChange,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.header {
+  display: flex;
+  height: 45px;
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .handler {
+    align-items: center;
+  }
+}
+
+.footer {
+  margin-top: 15px;
+
+  .el-pagination {
+    text-align: right;
+  }
+}
+</style>
