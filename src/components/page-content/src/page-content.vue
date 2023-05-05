@@ -37,6 +37,17 @@
           >
         </div>
       </template>
+
+      <!-- 3.在page-content中动态插入剩余的插槽 -->
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
+      </template>
     </hy-table>
   </div>
 </template>
@@ -61,7 +72,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props: any) {
+  setup(props) {
     const store = useStore()
 
     // 双向绑定pageInfo
@@ -89,11 +100,23 @@ export default defineComponent({
       store.getters[`system/pageListCount`](props.pageName)
     )
 
+    // 获取其他的动态插槽名称
+    const otherPropSlots = props.contentTableConfig?.propList.filter(
+      (item: any) => {
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
+      }
+    )
+
     return {
       dataList,
       dataCount,
       getPageData,
-      pageInfo
+      pageInfo,
+      otherPropSlots
     }
   }
 })
