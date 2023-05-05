@@ -20,6 +20,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeUsersCount(state, userCount: number) {
       state.usersCount = userCount
+    },
+    changeRoleList(state, list: any[]) {
+      state.roleList = list
+    },
+    changeRoleCount(state, count: number) {
+      state.roleCount = count
     }
   },
   getters: {
