@@ -29,15 +29,16 @@ const systemModule: Module<ISystemState, IRootState> = {
     }
   },
   getters: {
+    // 获取列表数据
     pageListData(state) {
       return (pageName: string) => {
         return (state as any)[`${pageName}List`]
-        // switch (pageName) {
-        //   case 'users':
-        //     return state.usersList
-        //   case 'role':
-        //     return state.roleList
-        // }
+      }
+    },
+    // 获取总条数
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
       }
     }
   },
@@ -46,18 +47,13 @@ const systemModule: Module<ISystemState, IRootState> = {
       // 1.获取pageUrl
       const pageName = payload.pageName
       const pageUrl = `/${pageName}/list`
-      // switch (pageName) {
-      //   case 'users':
-      //     pageUrl = '/users/list'
-      //     break
-      //   case 'role':
-      //     pageUrl = '/role/list'
-      //     break
-      // }
+
       // 2.对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+
       // 3.将数据存储到state中
       const { list, totalCount } = pageResult.data
+
       const changePageName =
         pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
       commit(`change${changePageName}List`, list)

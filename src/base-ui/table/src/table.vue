@@ -1,5 +1,6 @@
 <template>
   <div class="hy-table">
+    <!-- 表头header -->
     <div class="header">
       <slot name="header">
         <div class="title">{{ title }}</div>
@@ -9,6 +10,7 @@
       </slot>
     </div>
 
+    <!-- 列表部分 -->
     <el-table
       size="mini"
       :data="listData"
@@ -40,16 +42,17 @@
       </template>
     </el-table>
 
+    <!-- 翻页部分 -->
     <div class="footer">
       <slot name="footer">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :current-page="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
         >
         </el-pagination>
       </slot>
@@ -62,14 +65,22 @@
 import { PropType, defineComponent } from 'vue'
 export default defineComponent({
   props: {
+    // 列表title
     title: {
       type: String,
       default: ''
     },
+    // 列表数据
     listData: {
       type: Array,
       required: true
     },
+    // 总页数
+    listCount: {
+      type: Number,
+      default: 0
+    },
+    // 表头数据
     propList: {
       type: Array as PropType<any[]>,
       default() {
@@ -77,29 +88,41 @@ export default defineComponent({
       },
       required: true
     },
+    // 控制序号列显示
     showIndexColumn: {
       type: Boolean,
       default: false
     },
+    // 控制勾选框列显示
     showSelectColumn: {
       type: Boolean,
       default: false
     },
-    currentPage: {
-      type: Number,
-      default: 1
+    // 页数信息
+    page: {
+      type: Object,
+      // default: () => ({ currentPage: 0, pageSize: 10 })
+      default() {
+        return {
+          currentPage: 0,
+          pageSize: 10
+        }
+      }
     }
   },
-  emits: ['selectionChange', 'sizeChange', 'currentChange'],
-  setup(props, { emit }) {
+  emits: ['selectionChange', 'update:page'],
+  setup(props: any, { emit }) {
+    // 勾选列表数据变化
     const handelSelectionChange = (value: any) => {
       emit('selectionChange', value)
     }
-    const handleSizeChange = (value: any) => {
-      emit('sizeChange', value)
+    // 页面跳转
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
     }
-    const handleCurrentChange = (value: any) => {
-      emit('currentChange', value)
+    // 每页数量变化
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
     }
     return {
       handelSelectionChange,
