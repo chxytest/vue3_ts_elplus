@@ -17,15 +17,16 @@
       border
       style="width: 100%"
       @selection-change="handelSelectionChange"
+      v-bind="childrenProps"
     >
       <el-table-column
-        v-show="showSelectColumn"
+        v-if="showSelectColumn"
         type="selection"
         align="center"
         width="60"
       ></el-table-column>
       <el-table-column
-        v-show="showIndexColumn"
+        v-if="showIndexColumn"
         type="index"
         label="序号"
         align="center"
@@ -108,6 +109,11 @@ export default defineComponent({
           pageSize: 10
         }
       }
+    },
+    // 列表子项展开属性
+    childrenProps: {
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ['selectionChange', 'update:page'],
