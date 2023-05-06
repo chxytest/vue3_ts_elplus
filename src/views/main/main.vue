@@ -15,8 +15,6 @@
             <router-view></router-view>
           </div>
         </el-main>
-
-        <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
   </div>

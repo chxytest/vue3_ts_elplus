@@ -44,7 +44,7 @@
     </el-table>
 
     <!-- 翻页部分 -->
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
           @size-change="handleSizeChange"
@@ -114,6 +114,10 @@ export default defineComponent({
     childrenProps: {
       type: Object,
       default: () => ({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['selectionChange', 'update:page'],
