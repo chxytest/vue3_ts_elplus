@@ -2,7 +2,7 @@ import { IForm } from '@/base-ui/form'
 
 export const searchFormConfig: IForm = {
   labelWidth: '100px',
-  itemLayout: {
+  itemStyle: {
     padding: '10px 10px'
   },
   colLayout: {

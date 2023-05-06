@@ -93,7 +93,7 @@ export default defineComponent({
     }
   },
   emits: ['update:modelValue'],
-  setup(props, { emit }) {
+  setup(props: any, { emit }) {
     // 方法一：
     // 浅拷贝
     const formData = reactive({ ...props.modelValue })
